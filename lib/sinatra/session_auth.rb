@@ -1,4 +1,3 @@
-require 'sinatra/base'
 require 'date'
 require 'digest/sha1'
 
