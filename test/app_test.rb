@@ -12,13 +12,13 @@ class AppTest < Test::Unit::TestCase
   context "GET /protected" do
     should "require authentication" do
       visit "/protected"
-      assert_equal "http://example.org/login", last_request.url
+      assert_equal "http://example.org/protected/login", last_request.url
     end
   end
 
   context "A visitor" do
     should "be able to signup for an account" do
-      visit "/signup" 
+      visit "/protected/signup" 
       fill_in "Login",    :with => "pmh"
       fill_in "Password", :with => "1234"
       click_button "Submit"
@@ -28,7 +28,7 @@ class AppTest < Test::Unit::TestCase
     should "be able to login" do
       user = User.create(:login => "pmh", :password => "1234")
 
-      visit "/login"
+      visit "/protected/login"
       fill_in "Login",    :with => "pmh"
       fill_in "Password", :with => "1234"
       click_button "Submit"

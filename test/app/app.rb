@@ -28,12 +28,13 @@ get "/" do
 end
 
 get "/protected" do
+  flash[:notice] = 'You must be logged in to view this page.'
   authorize!
   erb "<%= flash[:notice] %><br />Protected"
 end
 
-get '/login' do
-  '<form action="/login" method="post">
+get '/protected/login' do
+  '<form action="/protected/login" method="post">
     <label for="login">Login</label><input id="login" type="text" size="30" name="user[login]"/>
     <label for="password">Password</label><input id="password" type="password" size="30" name="user[password]"/>
     <br/>
@@ -41,7 +42,7 @@ get '/login' do
   </form>'
 end
 
-post '/login' do
+post '/protected/login' do
   if session[:user] = User.authenticate(params[:user])
     flash[:notice] = "Login succesful"
     redirect '/'
@@ -51,8 +52,8 @@ post '/login' do
   end
 end
 
-get '/signup' do
-  '<form action="/signup" method="post">
+get '/protected/signup' do
+  '<form action="/protected/signup" method="post">
     <label for="login">Login</label><input id="login" type="text" size="30" name="user[login]"/>
     <label for="password">Password</label><input id="password" type="password" size="30" name="user[password]"/>
     <br/>
@@ -60,7 +61,7 @@ get '/signup' do
   </form>'
 end
 
-post '/signup' do
+post '/protected/signup' do
   if session[:user] = User.new(params[:user])
     flash[:notice] = "Your account has been created"
     redirect '/'
@@ -70,7 +71,7 @@ post '/signup' do
   end
 end
 
-get '/logout' do
+get '/protected/logout' do
   logout!
   flash[:notice] = "Logged out"
   redirect '/'

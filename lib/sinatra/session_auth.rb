@@ -45,10 +45,7 @@ module Sinatra
       end
 
       def authorize!
-        unless authorized?
-          flash[:notice] = 'You must be logged in to view this page.'
-          redirect '/login'
-        end
+        redirect '/protected/login' unless authorized?
       end
 
       def logout!
