@@ -3,17 +3,17 @@ require 'digest/sha1'
 
 module Sinatra
   module SessionAuth
-    module EncryptionHelpers
+    module ModelHelpers
       def self.included(klass)
-        klass.send(:include, InstanceMethods)
-        klass.send(:extend,  ClassMethods   )
+        klass.send :include, InstanceMethods
+        klass.send :extend,  ClassMethods
       end 
 
       module InstanceMethods
         def password=(pass)
           @password = pass
-          self.salt = User.random_string(10) unless self.salt
-          self.hashed_password = User.encrypt(@password, self.salt)
+          self.salt = self.class.random_string(10) unless self.salt
+          self.hashed_password = self.class.encrypt(@password, self.salt)
         end
       end
 
@@ -58,41 +58,6 @@ module Sinatra
 
     def self.registered(app)
       app.helpers SessionAuth::Helpers
-      app.set :views, "/views"
-      app.get '/login' do
-        erb :login
-      end
-
-      app.post '/login' do
-        if session[:user] = User.authenticate(params[:user])
-          flash[:notice] = "Login succesful"
-          redirect '/'
-        else
-          flash[:notice] = "Login failed - Try again"
-          redirect '/login'
-        end
-      end
-
-      app.get '/logout' do
-        logout!
-        flash[:notice] = "Logged out"
-        redirect '/'
-      end
-      
-      app.get "/signup" do
-        erb :signup
-      end
-
-      app.post "/signup" do
-        if user = User.create(params[:user])
-          session[:user] = user
-          flash[:notice] = "Your account was succesfully created"
-          redirect '/'
-         else
-           flash[:notice] = "Signup failed - Try again"
-           redirect '/signup'
-        end
-      end
     end
   end
 
