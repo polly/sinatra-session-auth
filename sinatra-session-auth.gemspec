@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{sinatra-session-auth}
-  s.version = "0.1.0"
+  s.version = "0.1.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Patrik Hedman"]
-  s.date = %q{2009-11-24}
+  s.date = %q{2009-11-25}
   s.description = %q{sinatra-session-auth is an extension for Sinatra to add orm-agnostic session based user authorization}
   s.email = %q{patrik@moresale.se}
   s.extra_rdoc_files = [
@@ -22,13 +22,22 @@ Gem::Specification.new do |s|
      "README.md",
      "Rakefile",
      "VERSION",
-     "lib/sinatra/session_auth.rb"
+     "lib/sinatra/session_auth.rb",
+     "sinatra-session-auth.gemspec",
+     "test/app/app.rb",
+     "test/app_test.rb",
+     "test/test_helper.rb"
   ]
   s.homepage = %q{http://github.com/polly/sinatra-session-auth}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{A orm-agnostic extension to add session based user authorization}
+  s.test_files = [
+    "test/app/app.rb",
+     "test/app_test.rb",
+     "test/test_helper.rb"
+  ]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
